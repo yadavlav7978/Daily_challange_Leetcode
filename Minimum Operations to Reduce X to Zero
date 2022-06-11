@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        
+        int sum=accumulate(nums.begin(),nums.end(),0);
+        
+        int trgt=sum-x;
+        
+        if(trgt<0){
+            return -1;
+        }
+        
+        int i=0;
+        int j=0;
+        
+        int temp=0;
+        
+        int n=nums.size();
+        
+        int mx=-1;
+        
+        while(j<n){
+            
+            if(temp==trgt){
+                mx=max(mx,j-i);
+                temp-=nums[i];
+                i++;
+            }
+            
+            else if(temp<trgt){
+                temp+=nums[j];
+                j++;
+            }
+            else{
+                temp-=nums[i];
+                i++;
+            }
+            
+        }
+      
+        while(i<n && temp>trgt){
+            temp-=nums[i];
+            i++;
+        }
+        
+         if(temp==trgt){
+            mx=max(mx,j-i);
+               
+        }
+        
+          if(mx==-1){
+            return -1;
+        }
+        
+        return n-mx;
+            
+        
+    }
+};
