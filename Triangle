@@ -1,0 +1,36 @@
+class Solution {
+public:
+   
+    int n;
+     vector<vector<int>>dp;
+    
+    int rec(int i,int j,vector<vector<int>>&t){
+        
+        if(i==n){
+            return 0;
+        }
+        
+        if(dp[i][j]!=INT_MAX){
+            return dp[i][j];
+        }
+        
+    
+        int c1=t[i][j]+rec(i+1,j,t);
+        
+    
+        int c2=t[i][j]+rec(i+1,j+1,t);
+        
+         
+        return dp[i][j]=min({c1,c2});
+        
+    }
+    
+    int minimumTotal(vector<vector<int>>& triangle) {
+        
+        n=triangle.size();
+        
+      dp.resize(n,vector<int>(n,INT_MAX));
+        
+        return rec(0,0,triangle);
+    }
+};
