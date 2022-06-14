@@ -1,0 +1,44 @@
+class Solution {
+public:
+    
+    vector<vector<int>>dp;
+    
+    int rec(string &s1,string &s2,int i,int j){
+        
+        if(i==0||j==0){
+            return 0;
+        }
+        
+        if(dp[i-1][j-1]!=-1){
+            return dp[i-1][j-1];
+        }
+        
+        int c1=0;
+        
+        if(s1[i-1]==s2[j-1]){
+             c1=1+rec(s1,s2,i-1,j-1);
+        
+        }
+        
+         int c2=rec(s1,s2,i-1,j);
+         int c3=rec(s1,s2,i,j-1);
+        
+          return dp[i-1][j-1]=max({c1,c2,c3});
+            
+    }
+    
+    
+    
+    int minDistance(string word1, string word2) {
+        
+        int n1=word1.length();
+        int n2=word2.length();
+        
+        dp.resize(n1,vector<int>(n2,-1));
+        
+        int t=rec(word1,word2,n1,n2);
+        
+        return n1+n2-2*t;
+        
+    }
+};
