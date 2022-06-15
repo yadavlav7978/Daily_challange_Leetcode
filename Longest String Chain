@@ -1,0 +1,84 @@
+class Solution {
+public:
+    
+    bool is_subseqnc(string &a,string &b,int i,int j){
+        
+        if(i<0){
+            return true;
+        }
+        if(j<0){
+            return false;
+        }
+        
+        if(a[i]==b[j]){
+             return is_subseqnc(a,b,i-1,j-1);
+        }
+        return is_subseqnc(a,b,i,j-1);
+        
+    }
+    
+    unordered_map<string,int>dp;
+
+    int rec(unordered_map<int,vector<string>>&mp,int needlen,string prev_string){
+        
+        if(mp.find(needlen)==mp.end()){
+            return 0;
+        }
+        
+        string key=prev_string+"l"+to_string(needlen);
+        
+        if(dp.find(key)!=dp.end()){
+            return dp[key];
+        }
+        
+        int c1=0;
+        
+        for(auto it:mp[needlen]){
+                
+            string s=it;
+            
+            if(is_subseqnc(prev_string,s,prev_string.length()-1,s.length()-1)){
+                
+                c1=max(c1,1+rec(mp,needlen+1,s));
+               
+            }
+        }
+        
+        return dp[key]=c1;
+        
+    }
+    
+    int longestStrChain(vector<string>& words) {
+        
+        unordered_map<int,vector<string>>mp;
+        int mn=INT_MAX;
+        int mx=INT_MIN;
+    
+        for(int i=0;i<words.size();i++){
+            
+            string s=words[i];
+            int len=s.length();
+            
+            mp[len].push_back(s);
+            
+            mn=min(mn,len);
+            mx=max(mx,len);
+        
+        }
+        
+        int ans=1;
+        
+        for(int i=mn;i<=mx;i++){
+            
+            for(auto it:mp[i]){
+            
+              string s=it;
+        
+             ans=max(ans,1+rec(mp,i+1,s));
+          }
+        }
+        
+        return ans;
+        
+    }
+};
