@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int maxScore(vector<int>& card, int k) {
+        
+        int n=card.size();
+        
+        int len=n-k;
+        
+        int temp=0;
+        
+       int i=0;
+       int j=0;
+        
+        while((j-i+1)<=len){
+            
+            temp+=card[j];
+            j++;
+        }
+        
+        int mn_sum=temp;
+        
+        while(j<n){
+            
+            temp-=card[i];
+            temp+=card[j];
+            
+            mn_sum=min(mn_sum,temp);
+            
+            j++;
+            i++;
+        }
+        
+            
+      int total=accumulate(card.begin(),card.end(),0);
+        
+        return total-mn_sum;
+           
+    }
+};
