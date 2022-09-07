@@ -1,0 +1,50 @@
+class Solution {
+public:
+    
+    bool check(TreeNode* r){
+        
+        if(!r){
+            return true;
+        }
+        
+        if(r->val==1){
+            return false;
+        }
+        
+        if(!check(r->left) ||  !check(r->right)){
+            return false;
+        }
+     
+        return true;
+    }
+    
+    
+    TreeNode* pruneTree(TreeNode* root) {
+        
+        if(!root){
+            return NULL;
+        }
+        
+       bool ch1=check(root->left);
+        
+        if(ch1){
+            root->left=NULL;
+        }
+        
+        pruneTree(root->left);
+        
+        bool ch2=check(root->right);
+        
+          if(ch2){
+            root->right=NULL;
+        }
+        
+        pruneTree(root->right);
+        
+         if(root->val==0 and !root->left and !root->right){
+            return NULL;
+        }
+       
+        return root;
+    }
+};
