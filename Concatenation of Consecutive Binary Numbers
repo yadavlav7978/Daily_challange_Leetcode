@@ -1,0 +1,50 @@
+#define md 1000000007;
+
+class Solution {
+public:
+
+    string binary(int num){
+        
+       int loop=log2(num);
+        
+        string s;
+        
+        for(int i=loop;i>=0;i--){
+            
+            if(((1<<i)&num)!=0){
+                s+='1';
+            }else{
+                s+='0';
+            }
+        }
+        
+        return s;   
+    }
+    
+    
+    int concatenatedBinary(int n) {
+        
+        int result=0;
+        
+        int b=1;
+        
+        for(int i=n;i>=1;i--){
+            
+            string x=binary(i);
+            
+            for(int j=x.length()-1;j>=0;j--){
+                
+                int l=x[j]-'0';
+                int r=b%md;
+                
+                result+=l*r;
+                result=result%md;
+            
+                b=2*r;
+            }
+            
+        }
+        
+        return result;
+    }
+};
